@@ -1,0 +1,45 @@
+body {
+  width: 250px;
+  text-align: center;
+}
+
+.parameters {
+  margin-bottom: 40px;
+}
+
+.value {
+  font-size: 16px;
+}
+
+input[type='range'] {
+  width: 100%;
+}
+
+.color input {
+  margin-right: 4px;
+}
+
+#saveBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  background: #eee;
+  border-radius: 8px;
+}
+
+#saveBtn:hover {
+  background: #ccc;
+}
+
+#saveBtn:disabled {
+  background: #666;
+}
+
+#saveBtn .icon {
+  margin-right: 4px;
+}
+
+#saveBtn .description {
+  font-size: 16px;
+}
