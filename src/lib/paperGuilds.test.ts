@@ -1,15 +1,16 @@
-import puppeteer from 'puppeteer'
+import { chromium } from 'playwright'
 
-import { getAffils, getAuthors, getTitles } from '@/lib/paperGuilds'
+import { getAffils, getAuthors, getTitles } from './paperGuilds'
 
 describe('getPapersInfo', () => {
     const url = 'https://pgl.jp/seminars/chi2023/sessions/646bb5fb7fb3e6002aabf6aa'
 
     // titles
     test('fetch titles from a session page', async () => {
-        const browser = await puppeteer.launch({ headless: 'new' })
-        const page = await browser.newPage()
-        await page.goto(url, { waitUntil: 'networkidle0' })
+        const browser = await chromium.launch()
+        const context = await browser.newContext()
+        const page = await context.newPage()
+        await page.goto(url)
 
         const result = await getTitles(page)
         expect(result).toEqual([
@@ -23,13 +24,14 @@ describe('getPapersInfo', () => {
 
         await page.close()
         await browser.close()
-    }, 10000)
+    }, 20000)
 
     // authors
     test('fetch authors from a session page', async () => {
-        const browser = await puppeteer.launch({ headless: 'new' })
-        const page = await browser.newPage()
-        await page.goto(url, { waitUntil: 'networkidle0' })
+        const browser = await chromium.launch()
+        const context = await browser.newContext()
+        const page = await context.newPage()
+        await page.goto(url)
 
         const result = await getAuthors(page)
         expect(result).toEqual([
@@ -57,13 +59,14 @@ describe('getPapersInfo', () => {
 
         await page.close()
         await browser.close()
-    }, 10000)
+    }, 20000)
 
     // affilations
     test('fetch affilations from a session page', async () => {
-        const browser = await puppeteer.launch({ headless: 'new' })
-        const page = await browser.newPage()
-        await page.goto(url, { waitUntil: 'networkidle0' })
+        const browser = await chromium.launch()
+        const context = await browser.newContext()
+        const page = await context.newPage()
+        await page.goto(url)
 
         const result = await getAffils(page)
         expect(result).toEqual([
@@ -110,5 +113,5 @@ describe('getPapersInfo', () => {
 
         await page.close()
         await browser.close()
-    }, 10000)
+    }, 20000)
 })

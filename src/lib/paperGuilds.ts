@@ -1,4 +1,4 @@
-import puppeteer, { Page } from 'puppeteer'
+import { chromium, Page } from 'playwright'
 
 // Get titles
 export const getTitles = async (page: Page) => {
@@ -44,9 +44,10 @@ export const getAffils = async (page: Page) => {
 
 export const fetchPapersInfo = async (url: string) => {
     // Fetch html and get the document object
-    const browser = await puppeteer.launch({ headless: 'new' })
-    const page = await browser.newPage()
-    await page.goto(url, { waitUntil: 'networkidle0' })
+    const browser = await chromium.launch()
+    const context = await browser.newContext()
+    const page = await context.newPage()
+    await page.goto(url)
 
     // Get metadata for each paper
     const titles = await getTitles(page)
