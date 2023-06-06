@@ -13,7 +13,7 @@ export default function Debug() {
                       <p key={paperInfo.title}>
                           {paperInfo.title}
                           <br />
-                          {paperInfo.authors.join(', ')}
+                          {paperInfo.authors?.join(', ')}
                           <br />
                           {paperInfo.affils}
                       </p>

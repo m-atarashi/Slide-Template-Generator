@@ -1,9 +1,10 @@
 import pptxgenjs from 'pptxgenjs'
 
-import getAffilsTextProps from '@/lib/getAffilsText'
-import getAuthorsText from '@/lib/getAuthorsText'
-import { PaperInfo } from '@/lib/types'
 import SlideOptions from '@/slideOptions/demo.json'
+
+import getAffilsTextProps from './getAffilsText'
+import getAuthorsText from './getAuthorsText'
+import { PaperInfo } from './types'
 
 // Options
 const options = SlideOptions.options as pptxgenjs.TextProps
