@@ -1,6 +1,6 @@
 import pptxgenjs from 'pptxgenjs'
-import SlideOptions from 'slideOptions/demo.json'
 
+import SlideOptions from '../data/slideOptions/demo.json'
 import { PaperInfo } from './types'
 
 // Get the authors separated by commas with reference numbers
