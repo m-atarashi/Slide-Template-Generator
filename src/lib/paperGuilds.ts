@@ -1,106 +1,92 @@
 import axios from 'axios'
 import { parseHTML } from 'linkedom'
-import { chromium, Page } from 'playwright'
 
-import { extractLocation } from './affiliation'
-import fetchMetadata from './doi'
+// Validate the URL
+export const validateSessionPage = (url: string) => {
+    // Check if the URL is session page
+    const isSessionPage = RegExp('^https://pgl.jp/seminars/.+/sessions/.+$')
+    if (isSessionPage.test(url) === false) throw new Error('Invalid URL')
 
-// Get titles
-export const getTitles = async (page: Page) => {
-    // Wait for the selector to appear
-    const selector = 'div[class="ui divided list"] a'
-    await page.waitForSelector(selector)
-
-    // Extract titles
-    const titles = await page.$$eval(selector, (nodes) => nodes.map((e) => e.textContent ?? ''))
-    return titles
+    // Session id is 24-digit hexadecimal number
+    const isExists = RegExp('^https://pgl.jp/seminars/.+/sessions/[a-fA-F0-9]{24}$')
+    if (isExists.test(url) === false) throw new Error('Invalid URL')
 }
 
-// Get authors
-export const getAuthors = async (page: Page) => {
-    // Wait for the selector to appear
-    const selector = '.main div[class="ui divided horizontal list"]'
-    await page.waitForSelector(selector)
+// Get the conference name
+export const getConferenceName = (url: string) => {
+    // Validate the URL
+    validateSessionPage(url)
 
-    // Extract author names
-    const authorsAll = await page.$$eval(selector, (nodes) => {
-        return nodes.map((e) => {
-            const nodes = e.querySelectorAll('.header')
-            return Array.from(nodes, (e) => e.textContent ?? '')
-        })
-    })
-    return authorsAll
+    // Extract the conference name
+    const regex = RegExp('^https://pgl\\.jp/seminars/(.+?)/sessions/.+$')
+    const match = url.match(regex)
+    if (match === null) throw new Error('Invalid URL')
+    return match[1]
 }
 
-// Get affiliations
-export const getAffiliations = async (page: Page) => {
-    // Wait for the selector to appear
-    const selector = '.main div[class="ui divided horizontal list"]'
-    await page.waitForSelector(selector)
+// Get the session name
+export const fetchSessionName = async (url: string) => {
+    // Validate the URL
+    validateSessionPage(url)
 
-    // Extract organization names
-    const affiliationsList = await page.$$eval(selector, (nodes) => {
-        return nodes.map((e) => {
-            const nodes = e.querySelectorAll('.description')
-            return Array.from(nodes, (e) => e.textContent ?? '')
-        })
-    })
-    return affiliationsList
-}
-
-// Get a list of metadata of papers in a session page
-export const fetchMetadataList = async (url: string) => {
-    // Fetch html and get the document object
-    const browser = await chromium.launch()
-    const context = await browser.newContext()
-    const page = await context.newPage()
-    await page.goto(url)
-
-    // Get metadata for each paper
-    const titles = await getTitles(page)
-    const authorsList = await getAuthors(page)
-    const affiliationsList = await getAffiliations(page)
-
-    // Close the browser
-    await page.close()
-    await browser.close()
-
-    // Get the organization names
-    const promises = Promise.all(affiliationsList.map((e) => Promise.all(e.map(extractLocation))))
-    const organizationsList = (await promises).map((e) => e.map((f) => f.fullOrganization))
-
-    // Integrate the metadata
-    const metadataList = titles.map((title, i) => {
-        return { title, authors: authorsList[i], affiliations: organizationsList[i] }
-    })
-    return metadataList
-}
-
-// Fetch a list of doi in a session page
-export const fetchDois = async (url: string) => {
     // Fetch html and get the document object
     const response = await axios.get(url)
     const { document } = parseHTML(response.data)
 
-    // Extract the doi urls
-    const selector = 'div[class="ui top attached segment"] > div > a'
-    const nodes = document.querySelectorAll(selector)
-    const dois = Array.from(nodes, (e) => e.textContent ?? '')
-    return dois
+    // Extract the session name
+    const selector = 'div.main h1.header'
+    let sessionName = document.querySelector(selector)?.textContent ?? ''
+
+    // Remove the session number
+    sessionName = sessionName.split('. ').splice(1).join('')
+    return sessionName
 }
 
-// Get a list of metadata of papers in a session page via doi
-export const fetchMetadataListViaDoi = async (url: string) => {
-    // Get the doi uri list from the session page
-    const dois = await fetchDois(url)
+// Get a list of metadata of papers in a session page
+export const getMetadata = async (url: string) => {
+    // Validate the URL
+    validateSessionPage(url)
 
-    // Get the metadata of the papers via Crossref REST API
-    const metadataList = await Promise.all(dois.map(fetchMetadata))
+    // Get the conference program
+    const conferenceName = getConferenceName(url)
+    const program = await import(`../data/programs/${conferenceName}.json`)
 
-    // Extract title, authors, and organizations
-    const paperInfo = metadataList.map((e) => {
-        const organizations = e.affiliations.map(({ organization }) => organization)
-        return { ...e, affiliations: organizations }
-    })
-    return paperInfo
+    // Get the session data
+    const sessionName = await fetchSessionName(url)
+    const session = program.sessions.find((e: any) => e.name === sessionName)
+
+    // Get the papers
+    const papers = session.contentIds.map((contentId: number) =>
+        program.contents.find((e: any) => e.id === contentId)
+    )
+
+    const metadataList = []
+
+    // Get the metadata for each paper
+    for (const paper of papers) {
+        // Get the authors
+        const authors: string[] = paper.authors.map((author: any) => {
+            const person = program.people.find((e: any) => e.id === author.personId)
+            return person.firstName + ' ' + person.lastName
+        })
+
+        // Get the affiliations
+        const affiliations: string[][] = paper.authors.map((author: any) => {
+            const institutions: string[] = author.affiliations.map((e: any) => e.institution)
+            return [...new Set(institutions)]
+        })
+
+        // Get other metadata
+        const award: string = paper.award ?? ''
+        const doi: string = paper.addons.doi.url ?? ''
+
+        const metadata = { title: paper.title as string, authors, affiliations, award, doi }
+        metadataList.push(metadata)
+    }
+
+    return metadataList
 }
+
+getMetadata('https://pgl.jp/seminars/chi2023/sessions/646bb5fb7fb3e6002aabf6a7').then((res) =>
+    console.log(JSON.stringify(res, null, 4))
+)

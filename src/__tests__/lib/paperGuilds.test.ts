@@ -1,96 +1,45 @@
-import * as paperGuilds from '@lib/paperGuilds'
-import { chromium } from 'playwright'
+import { fetchSessionName, getConferenceName, validateSessionPage } from '@lib/PaperGuilds'
 
-import cases from './paperGuilds.case.json'
+import cases from './PaperGuilds.case.json'
 
-describe('fetchTitles', () => {
+describe('validateSessionPage', () => {
     // Positive testing
-    test.each(cases.getTitles.positive)(
-        'Positive testing',
-        async ({ input, output }) => {
-            const browser = await chromium.launch()
-            const context = await browser.newContext()
-            const page = await context.newPage()
-            await page.goto(input)
+    test.each([
+        'https://pgl.jp/seminars/chi2023/sessions/646bb5fb7fb3e6002aabf6aa',
+        'https://pgl.jp/seminars/chi2023/sessions/646bb5fb7fb3e6002aabf6c2',
+    ])('Valid url', async (input) => {
+        const func = () => validateSessionPage(input)
+        expect(func).not.toThrow()
+    })
 
-            const result = await paperGuilds.getTitles(page)
-            expect(result).toEqual(output)
+    // Negative testing
+    test('Empty url', async () => {
+        const func = async () => await fetchSessionName('')
+        expect(func).rejects.toThrow('Invalid URL')
+    })
 
-            await page.close()
-            await browser.close()
-        },
-        10000
-    )
-})
-
-describe('fetchAuthors', () => {
-    // Positive testing
-    test.each(cases.getAuthors.positive)(
-        'Positive testing',
-        async ({ input, output }) => {
-            const browser = await chromium.launch()
-            const context = await browser.newContext()
-            const page = await context.newPage()
-            await page.goto(input)
-
-            const result = await paperGuilds.getAuthors(page)
-            expect(result).toEqual(output)
-
-            await page.close()
-            await browser.close()
-        },
-        10000
-    )
-})
-
-describe('fetchAffiliations', () => {
-    // Positive testing
-    test.each(cases.getAffiliations.positive)(
-        'Positive testing',
-        async ({ input, output }) => {
-            const browser = await chromium.launch()
-            const context = await browser.newContext()
-            const page = await context.newPage()
-            await page.goto(input)
-
-            const result = await paperGuilds.getAffiliations(page)
-            expect(result).toEqual(output)
-
-            await page.close()
-            await browser.close()
-        },
-        10000
-    )
-})
-
-describe('fetchMetadataList', () => {
-    // Positive testing
-    test.each(cases.fetchMetadataList.positive)(
-        'Positive testing',
-        async ({ input, output }) => {
-            const metadataList = await paperGuilds.fetchMetadataList(input)
-            expect(metadataList).toEqual(output)
-        },
-        10000
-    )
-})
-
-describe('fetchDois', () => {
-    // Positive testing
-    test.each(cases.fetchDois.positive)('Positive testing', async ({ input, output }) => {
-        const dois = await paperGuilds.fetchDois(input)
-        expect(dois).toEqual(output)
+    test.each([
+        'https://pgl.jp/seminars/chi2023/sessions/a',
+        'https://pgl.jp/seminars/chi2023/',
+        "https://pgl.jp/seminars/chi2023/sessions/646bb5fb7fb3e6002aabf6c2aaaaa'",
+    ])('Invalid url', async (input) => {
+        const func = async () => await fetchSessionName(input)
+        expect(func).rejects.toThrow('Invalid URL')
     })
 })
 
-describe('fetchMetadataListViaDoi', () => {
+describe('getConferenceName', () => {
     // Positive testing
-    test.each(cases.fetchMetadataListViaDoi.positive)(
-        'Positive testing',
-        async ({ input, output }) => {
-            const metadataList = await paperGuilds.fetchMetadataListViaDoi(input)
-            expect(metadataList).toEqual(output)
-        },
-        10000
-    )
+    test.each(cases.getConferenceName.positive)('Valid url', async ({ input, output }) => {
+        const result = getConferenceName(input)
+        expect(result).toEqual(output)
+    })
+})
+
+describe('fetchSessionName', () => {
+    // Positive testing
+    test.each(cases.fetchSessionName.positive)('Positive testing', async ({ input, output }) => {
+        const result = await fetchSessionName(input)
+        expect(result).toEqual(output)
+    })
 })

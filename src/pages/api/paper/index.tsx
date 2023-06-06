@@ -1,4 +1,4 @@
-import { fetchMetadataList } from '@lib/paperGuilds'
+import { getMetadata } from '@lib/PaperGuilds'
 import { NextApiHandler } from 'next'
 import { z } from 'zod'
 
@@ -11,7 +11,7 @@ const handler: NextApiHandler = async (req, res) => {
 
         // Fetch data
         const { url } = parsedQuery.data
-        const message = await fetchMetadataList(url)
+        const message = await getMetadata(url)
         res.status(200).json(message)
     } else {
         res.status(400).json({ message: 'Only GET requests are allowed' })
