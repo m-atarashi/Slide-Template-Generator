@@ -1,0 +1,52 @@
+{
+    "fetchCrossref": {
+        "positive": [
+            {
+                "input": "https://doi.org/10.1145/3544548.3581091",
+                "output": {
+                    "title": "Charagraph: Interactive Generation of Charts for Realtime Annotation of Data-Rich Paragraphs",
+                    "authors": ["Damien Masson", "Sylvain Malacria", "Géry Casiez", "Daniel Vogel"],
+                    "affiliations": [
+                        "Cheriton School of Computer Science, University of Waterloo, Canada",
+                        "Univ. Lille, Inria, CNRS, Centrale Lille, UMR 9189 CRIStAL, France",
+                        "Univ. Lille, CNRS, Inria, Centrale Lille, UMR 9189 CRIStAL, France",
+                        "Cheriton School of Computer Science, University of Waterloo, Canada"
+                    ]
+                }
+            }
+        ]
+    },
+    "fetchMetadata": {
+        "positive": [
+            {
+                "input": "https://doi.org/10.1145/3544548.3581091",
+                "output": {
+                    "title": "Charagraph: Interactive Generation of Charts for Realtime Annotation of Data-Rich Paragraphs",
+                    "authors": ["Damien Masson", "Sylvain Malacria", "Géry Casiez", "Daniel Vogel"],
+                    "affiliations": [
+                        {
+                            "department": "Cheriton School of Computer Science",
+                            "organization": "University of Waterloo",
+                            "location": "Canada"
+                        },
+                        {
+                            "department": "",
+                            "organization": "Univ. Lille, Inria, CNRS, Centrale Lille, UMR 9189 CRIStAL",
+                            "location": "France"
+                        },
+                        {
+                            "department": "",
+                            "organization": "Univ. Lille, CNRS, Inria, Centrale Lille, UMR 9189 CRIStAL",
+                            "location": "France"
+                        },
+                        {
+                            "department": "Cheriton School of Computer Science",
+                            "organization": "University of Waterloo",
+                            "location": "Canada"
+                        }
+                    ]
+                }
+            }
+        ]
+    }
+}

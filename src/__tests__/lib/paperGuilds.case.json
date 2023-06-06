@@ -225,23 +225,23 @@
                         "affiliations": [
                             {
                                 "department": "Cheriton School of Computer Science",
-                                "institution": "University of Waterloo",
-                                "place": "Canada"
+                                "organization": "University of Waterloo",
+                                "location": "Canada"
                             },
                             {
                                 "department": "",
-                                "institution": "Univ. Lille, Inria, CNRS, Centrale Lille, UMR 9189 CRIStAL",
-                                "place": "France"
+                                "organization": "Univ. Lille, Inria, CNRS, Centrale Lille, UMR 9189 CRIStAL",
+                                "location": "France"
                             },
                             {
                                 "department": "",
-                                "institution": "Univ. Lille, CNRS, Inria, Centrale Lille, UMR 9189 CRIStAL",
-                                "place": "France"
+                                "organization": "Univ. Lille, CNRS, Inria, Centrale Lille, UMR 9189 CRIStAL",
+                                "location": "France"
                             },
                             {
                                 "department": "Cheriton School of Computer Science",
-                                "institution": "University of Waterloo",
-                                "place": "Canada"
+                                "organization": "University of Waterloo",
+                                "location": "Canada"
                             }
                         ]
                     },
@@ -257,28 +257,28 @@
                         "affiliations": [
                             {
                                 "department": "Cheriton School of Computer Science",
-                                "institution": "University of Waterloo",
-                                "place": "Canada"
+                                "organization": "University of Waterloo",
+                                "location": "Canada"
                             },
                             {
                                 "department": "",
-                                "institution": "Univ. Lille, Inria, CNRS, Centrale Lille, UMR 9189 - CRIStAL",
-                                "place": "France"
+                                "organization": "Univ. Lille, Inria, CNRS, Centrale Lille, UMR 9189 - CRIStAL",
+                                "location": "France"
                             },
                             {
                                 "department": "Cheriton School of Computer Science",
-                                "institution": "University of Waterloo",
-                                "place": "Canada"
+                                "organization": "University of Waterloo",
+                                "location": "Canada"
                             },
                             {
                                 "department": "Cheriton School of Computer Science",
-                                "institution": "University of Waterloo",
-                                "place": "Canada"
+                                "organization": "University of Waterloo",
+                                "location": "Canada"
                             },
                             {
                                 "department": "",
-                                "institution": "Univ. Lille, CNRS, Inria, Centrale Lille, UMR 9189 CRIStAL",
-                                "place": "France"
+                                "organization": "Univ. Lille, CNRS, Inria, Centrale Lille, UMR 9189 CRIStAL",
+                                "location": "France"
                             }
                         ]
                     },
@@ -288,18 +288,18 @@
                         "affiliations": [
                             {
                                 "department": "Allen School of Computer Science &amp; Engineering",
-                                "institution": "University of Washington",
-                                "place": "United States"
+                                "organization": "University of Washington",
+                                "location": "United States"
                             },
                             {
                                 "department": "Allen School of Computer Science &amp; Engineering",
-                                "institution": "University of Washington",
-                                "place": "United States"
+                                "organization": "University of Washington",
+                                "location": "United States"
                             },
                             {
                                 "department": "Allen School of Computer Science &amp; Engineering",
-                                "institution": "University of Washington",
-                                "place": "United States"
+                                "organization": "University of Washington",
+                                "location": "United States"
                             }
                         ]
                     },
@@ -317,38 +317,38 @@
                         "affiliations": [
                             {
                                 "department": "Computer Science",
-                                "institution": "Northwestern University",
-                                "place": "United States"
+                                "organization": "Northwestern University",
+                                "location": "United States"
                             },
                             {
                                 "department": "Computer Science",
-                                "institution": "University of Chicago",
-                                "place": "United States"
+                                "organization": "University of Chicago",
+                                "location": "United States"
                             },
                             {
                                 "department": "Department of Statistical Sciences",
-                                "institution": "University of Toronto",
-                                "place": "Canada"
+                                "organization": "University of Toronto",
+                                "location": "Canada"
                             },
                             {
                                 "department": "Department of Statistical Sciences and Computer Science",
-                                "institution": "University of Toronto",
-                                "place": "Canada"
+                                "organization": "University of Toronto",
+                                "location": "Canada"
                             },
                             {
                                 "department": "Department of Computer Science and Statistical Sciences",
-                                "institution": "University of Toronto",
-                                "place": "Canada"
+                                "organization": "University of Toronto",
+                                "location": "Canada"
                             },
                             {
                                 "department": "Computer Science",
-                                "institution": "Northwestern University",
-                                "place": "United States"
+                                "organization": "Northwestern University",
+                                "location": "United States"
                             },
                             {
                                 "department": "Computer Science and Communication",
-                                "institution": "Northwestern University",
-                                "place": "United States"
+                                "organization": "Northwestern University",
+                                "location": "United States"
                             }
                         ]
                     },
@@ -364,28 +364,28 @@
                         "affiliations": [
                             {
                                 "department": "Paul G. Allen School for Computer Science &amp; Engineering",
-                                "institution": "University of Washington",
-                                "place": "United States"
+                                "organization": "University of Washington",
+                                "location": "United States"
                             },
                             {
                                 "department": "Paul G. Allen School of Computer Science &amp; Engineering",
-                                "institution": "University of Washington",
-                                "place": "United States"
+                                "organization": "University of Washington",
+                                "location": "United States"
                             },
                             {
                                 "department": "Paul G. Allen School of Computer Science &amp; Engineering",
-                                "institution": "University of Washington",
-                                "place": "United States"
+                                "organization": "University of Washington",
+                                "location": "United States"
                             },
                             {
                                 "department": "Paul G. Allen School of Computer Science &amp; Engineering",
-                                "institution": "University of Washington",
-                                "place": "Seattle, United States"
+                                "organization": "University of Washington",
+                                "location": "Seattle, United States"
                             },
                             {
                                 "department": "",
-                                "institution": "University of Washington",
-                                "place": "United States"
+                                "organization": "University of Washington",
+                                "location": "United States"
                             }
                         ]
                     },
@@ -395,18 +395,18 @@
                         "affiliations": [
                             {
                                 "department": "Department of Electrical and Computer Engineering",
-                                "institution": "University of New Brunswick",
-                                "place": "Canada"
+                                "organization": "University of New Brunswick",
+                                "location": "Canada"
                             },
                             {
                                 "department": "Department of Electrical and Computer Engineering",
-                                "institution": "University of New Brunswick",
-                                "place": "Canada"
+                                "organization": "University of New Brunswick",
+                                "location": "Canada"
                             },
                             {
                                 "department": "Faculty of Computer Science",
-                                "institution": "University of New Brunswick",
-                                "place": "Canada"
+                                "organization": "University of New Brunswick",
+                                "location": "Canada"
                             }
                         ]
                     }
@@ -414,5 +414,4 @@
             }
         ]
     }
-  }
-  
+}
