@@ -1,13 +1,13 @@
 import { useCallback, useContext } from 'react'
 
 import { PapersInfoContext } from '@/components/Context/PapersInfo'
-import { savePresentation } from '@/lib/savePresentation'
+import save from '@/lib/presentation'
 
 export default function SaveBtn() {
     const { papersInfo } = useContext(PapersInfoContext)
 
     const handleClick = useCallback(() => {
-        savePresentation(papersInfo)
+        save(papersInfo)
     }, [papersInfo])
 
     return (
