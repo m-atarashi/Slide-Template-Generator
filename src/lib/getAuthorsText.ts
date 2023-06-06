@@ -2,16 +2,16 @@ import pptxgen from 'pptxgenjs'
 
 // Get the authors separated by commas with reference numbers
 // e.g. John Doe^1, Jane Doe^2, ...
-const getAuthorsTextProps = (authors: string[], affils: string[]) => {
+const getAuthorsTextProps = (authors: string[], affiliations: string[]) => {
     const ret: pptxgen.TextProps[] = []
-    const affilsUnique = [...new Set(affils)]
+    const affiliationUnique = [...new Set(affiliations)]
 
     authors.forEach((author, index) => {
         // Add the author
         ret.push({ text: author })
 
         // Add the reference number
-        const num = affilsUnique.findIndex((e) => e === affils[index]) + 1
+        const num = affiliationUnique.findIndex((e) => e === affiliations[index]) + 1
         ret.push({
             text: num.toString(),
             options: { superscript: true },

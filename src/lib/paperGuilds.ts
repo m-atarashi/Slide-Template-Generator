@@ -33,19 +33,19 @@ export const getAuthors = async (page: Page) => {
 }
 
 // Get affiliations
-export const getAffils = async (page: Page) => {
+export const getAffiliations = async (page: Page) => {
     // Wait for the selector to appear
     const selector = '.main div[class="ui divided horizontal list"]'
     await page.waitForSelector(selector)
 
     // Extract organization names
-    const affilsAll = await page.$$eval(selector, (nodes) => {
+    const affiliationsList = await page.$$eval(selector, (nodes) => {
         return nodes.map((e) => {
             const nodes = e.querySelectorAll('.description')
             return Array.from(nodes, (e) => e.textContent)
         })
     })
-    return affilsAll
+    return affiliationsList
 }
 
 // Get a list of metadata of papers in a session page
@@ -58,8 +58,8 @@ export const fetchMetadataList = async (url: string) => {
 
     // Get metadata for each paper
     const titles = await getTitles(page)
-    const authorsAll = await getAuthors(page)
-    const affilsAll = await getAffils(page)
+    const authorsList = await getAuthors(page)
+    const affiliationsList = await getAffiliations(page)
 
     // Close the browser
     await page.close()
@@ -68,8 +68,8 @@ export const fetchMetadataList = async (url: string) => {
     // // Iterate over each paper to get metadata
     const metadata = titles.map((title, i) => ({
         title,
-        authors: authorsAll[i],
-        affiliations: affilsAll[i],
+        authors: authorsList[i],
+        affiliations: affiliationsList[i],
     }))
     return metadata
 }

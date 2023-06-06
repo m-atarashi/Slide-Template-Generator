@@ -4,7 +4,7 @@ import {
     fetchDois,
     fetchMetadataList,
     fetchMetadataListViaDoi,
-    getAffils,
+    getAffiliations,
     getAuthors,
     getTitles,
 } from '../paperGuilds'
@@ -50,9 +50,9 @@ describe('fetchAuthors', () => {
     )
 })
 
-describe('fetchAffils', () => {
+describe('fetchAffiliations', () => {
     // Positive testing
-    test.each(cases.getAffils.positive)(
+    test.each(cases.getAffiliations.positive)(
         'Positive testing',
         async ({ input, output }) => {
             const browser = await chromium.launch()
@@ -60,7 +60,7 @@ describe('fetchAffils', () => {
             const page = await context.newPage()
             await page.goto(input)
 
-            const result = await getAffils(page)
+            const result = await getAffiliations(page)
             expect(result).toEqual(output)
 
             await page.close()

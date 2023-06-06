@@ -12,8 +12,8 @@
     },
     "additionalOptions": {
         "titleFontSize": 20,
-        "authorsFontSize": 12,
-        "affilsFontSize": 12,
+        "authorFontSize": 12,
+        "affiliationFontSize": 12,
         "backgroundColor": "#085d81"
     }
 }

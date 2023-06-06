@@ -49,7 +49,7 @@
             }
         ]
     },
-    "getAffils": {
+    "getAffiliations": {
         "positive": [
             {
                 "input": "https://pgl.jp/seminars/chi2023/sessions/646bb5fb7fb3e6002aabf6aa",

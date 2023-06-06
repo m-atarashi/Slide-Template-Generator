@@ -11,7 +11,7 @@ export default function Slide(props: { slideNumber: number }) {
             <div className="header">
                 <div className="title">{paperInfo?.title}</div>
                 <div className="authors">{paperInfo?.authors}</div>
-                <div className="affils">{paperInfo?.affiliations}</div>
+                <div className="affiliations">{paperInfo?.affiliations}</div>
             </div>
         </div>
     )

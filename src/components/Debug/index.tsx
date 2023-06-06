@@ -15,7 +15,7 @@ export default function Debug() {
                           <br />
                           {paperInfo.authors?.join(', ')}
                           <br />
-                          {paperInfo.affils}
+                          {paperInfo.affiliations}
                       </p>
                   ))
                 : null}

@@ -26,13 +26,13 @@ const getPapersInfo = () => {
         const authors = Array.from(authorsInfo[i].querySelectorAll('.header'), (e) => e.innerText)
 
         // Get affiliations
-        const affils = Array.from(
+        const affiliations = Array.from(
             authorsInfo[i].querySelectorAll('.description'),
             (e) => e.innerText.split(',')[0]
         )
 
         // Add to res
-        res.push({ title, authors, affils })
+        res.push({ title, authors, affiliations })
     })
 
     return res

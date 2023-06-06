@@ -8,8 +8,8 @@ export interface PaperInfo {
 
 export interface SlideOptions extends pptxgenjs.TextProps {
     titleFontSize: number
-    authorsFontSize: number
-    affilsFontSize: number
+    authorFontSize: number
+    affiliationFontSize: number
     textColor: string
     backgroundColor: string
 }

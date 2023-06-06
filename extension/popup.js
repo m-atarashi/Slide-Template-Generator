@@ -2,8 +2,8 @@
 
 // Variables
 let titleFontSize = 20
-let authorsFontSize = 12
-let affilsFontSize = 12
+let authorFontSize = 12
+let affiliationFontSize = 12
 let textColor = '#ffffff'
 let backgroundColor = '#085d81'
 
@@ -26,15 +26,15 @@ const getAuthorsText = (paperInfo) => {
     const ret = []
 
     const authors = paperInfo.authors
-    const affils = paperInfo.affils
-    const affilsUnique = [...new Set(affils)]
+    const affiliations = paperInfo.affiliations
+    const affiliationsUnique = [...new Set(affiliations)]
 
     authors.forEach((author, index) => {
         // Add the author
         ret.push({ text: author })
 
         // Add the reference number
-        const num = affilsUnique.findIndex((e) => e === affils[index]) + 1
+        const num = affiliationsUnique.findIndex((e) => e === affiliations[index]) + 1
         ret.push({
             text: num.toString(),
             options: { superscript: true },
@@ -47,23 +47,23 @@ const getAuthorsText = (paperInfo) => {
     return ret
 }
 
-// Get the affiliations separated by commas with reference numbers
+// Get the affiliationiations separated by commas with reference numbers
 // e.g. ^1University of Tokyo, ^2Kyoto University, ...
-const getAffilsText = (paperInfo) => {
+const getAffiliationsText = (paperInfo) => {
     // Delete duplicates
-    const affilsUnique = [...new Set(paperInfo.affils)]
+    const affiliationsUnique = [...new Set(paperInfo.affiliations)]
     const ret = []
 
-    affilsUnique.forEach((affil, index) => {
+    affiliationsUnique.forEach((affiliation, index) => {
         // Add the reference number
         ret.push({
             text: (index + 1).toString(),
             options: { superscript: true },
         })
         // Add the affiliation
-        ret.push({ text: affil })
+        ret.push({ text: affiliation })
         // Add the separator
-        if (index !== affilsUnique.length - 1) ret.push({ text: ', ' })
+        if (index !== affiliationsUnique.length - 1) ret.push({ text: ', ' })
     })
     return ret
 }
@@ -84,7 +84,7 @@ const save = (papersInfo) => {
             x: 0,
             y: 0,
             w: '100%',
-            h: (titleFontSize * 2 * 1.5 + authorsFontSize * 1.5 + affilsFontSize * 1.5) / 72, // 1 inch = 72 points
+            h: (titleFontSize * 2 * 1.5 + authorFontSize * 1.5 + affiliationFontSize * 1.5) / 72, // 1 inch = 72 points
             fill: { color: backgroundColor },
         })
 
@@ -115,9 +115,9 @@ const save = (papersInfo) => {
 
         // Add the affiliations
         y += h
-        fontSize = affilsFontSize
+        fontSize = affiliationFontSize
         h = (fontSize * 1.5) / 72
-        slide.addText(getAffilsText(paperInfo), {
+        slide.addText(getAffiliationsText(paperInfo), {
             ...options,
             y: y,
             h: h,
@@ -157,15 +157,15 @@ document.addEventListener('DOMContentLoaded', () => {
     })
 
     // Affiliation font size
-    const affilFontSizeSlider = document.querySelector('.affil .fontSize input.slider')
-    const aaffilFontSizeText = document.querySelector('.affil .fontSize input.text')
-    affilFontSizeSlider.addEventListener('input', (e) => {
-        authorsFontSize = e.target.value
-        aaffilFontSizeText.value = e.target.value
+    const affiliationFontSizeSlider = document.querySelector('.affiliation .fontSize input.slider')
+    const affiliationFontSizeText = document.querySelector('.affiliation .fontSize input.text')
+    affiliationFontSizeSlider.addEventListener('input', (e) => {
+        authorFontSize = e.target.value
+        affiliationFontSizeText.value = e.target.value
     })
-    aaffilFontSizeText.addEventListener('input', (e) => {
-        authorsFontSize = e.target.value
-        affilFontSizeSlider.value = e.target.value
+    affiliationFontSizeText.addEventListener('input', (e) => {
+        authorFontSize = e.target.value
+        affiliationFontSizeSlider.value = e.target.value
     })
 
     // Text color
