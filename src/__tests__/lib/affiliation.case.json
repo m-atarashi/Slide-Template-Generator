@@ -1,0 +1,134 @@
+{
+    "extractLocationWithGeonames": {
+        "positive": [
+            {
+                "input": "Cheriton School of Computer Science, University of Waterloo, Canada",
+                "output": {
+                    "fullOrganization": "Cheriton School of Computer Science, University of Waterloo",
+                    "location": "Canada"
+                }
+            },
+            {
+                "input": "Univ. Lille, Inria, CNRS, Centrale Lille, UMR 9189 CRIStAL, France",
+                "output": {
+                    "fullOrganization": "Univ. Lille, Inria, CNRS, Centrale Lille, UMR 9189 CRIStAL",
+                    "location": "France"
+                }
+            },
+            {
+                "input": "Univ. Lille, CNRS, Inria, Centrale Lille, UMR 9189 CRIStAL, France",
+                "output": {
+                    "fullOrganization": "Univ. Lille, CNRS, Inria, Centrale Lille, UMR 9189 CRIStAL",
+                    "location": "France"
+                }
+            },
+            {
+                "input": "Cheriton School of Computer Science, University of Waterloo, Canada",
+                "output": {
+                    "fullOrganization": "Cheriton School of Computer Science, University of Waterloo",
+                    "location": "Canada"
+                }
+            }
+        ]
+    },
+    "extractLocationWithNinjas": {
+        "positive": [
+            {
+                "input": "Cheriton School of Computer Science, University of Waterloo, Canada",
+                "output": {
+                    "fullOrganization": "Cheriton School of Computer Science, University of Waterloo",
+                    "location": "Canada"
+                }
+            },
+            {
+                "input": "Univ. Lille, Inria, CNRS, Centrale Lille, UMR 9189 CRIStAL, France",
+                "output": {
+                    "fullOrganization": "Univ. Lille, Inria, CNRS, Centrale Lille, UMR 9189 CRIStAL",
+                    "location": "France"
+                }
+            },
+            {
+                "input": "Univ. Lille, CNRS, Inria, Centrale Lille, UMR 9189 CRIStAL, France",
+                "output": {
+                    "fullOrganization": "Univ. Lille, CNRS, Inria, Centrale Lille, UMR 9189 CRIStAL",
+                    "location": "France"
+                }
+            },
+            {
+                "input": "Cheriton School of Computer Science, University of Waterloo, Canada",
+                "output": {
+                    "fullOrganization": "Cheriton School of Computer Science, University of Waterloo",
+                    "location": "Canada"
+                }
+            }
+        ]
+    },
+    "extractDepartmentWithROR": {
+        "positive": [
+            {
+                "input": "Cheriton School of Computer Science, University of Waterloo, Canada",
+                "output": {
+                    "department": "Cheriton School of Computer Science",
+                    "organization": "University of Waterloo, Canada"
+                }
+            },
+            {
+                "input": "Univ. Lille, Inria, CNRS, Centrale Lille, UMR 9189 CRIStAL, France",
+                "output": {
+                    "department": "",
+                    "organization": "Univ. Lille, Inria, CNRS, Centrale Lille, UMR 9189 CRIStAL, France"
+                }
+            },
+            {
+                "input": "Univ. Lille, CNRS, Inria, Centrale Lille, UMR 9189 CRIStAL, France",
+                "output": {
+                    "department": "",
+                    "organization": "Univ. Lille, CNRS, Inria, Centrale Lille, UMR 9189 CRIStAL, France"
+                }
+            },
+            {
+                "input": "Cheriton School of Computer Science, University of Waterloo, Canada",
+                "output": {
+                    "department": "Cheriton School of Computer Science",
+                    "organization": "University of Waterloo, Canada"
+                }
+            }
+        ]
+    },
+    "parseAffiliationString": {
+        "positive": [
+            {
+                "input": "Cheriton School of Computer Science, University of Waterloo, Canada",
+                "output": {
+                    "department": "Cheriton School of Computer Science",
+                    "organization": "University of Waterloo",
+                    "location": "Canada"
+                }
+            },
+            {
+                "input": "Univ. Lille, Inria, CNRS, Centrale Lille, UMR 9189 CRIStAL, France",
+                "output": {
+                    "department": "",
+                    "organization": "Univ. Lille, Inria, CNRS, Centrale Lille, UMR 9189 CRIStAL",
+                    "location": "France"
+                }
+            },
+            {
+                "input": "Univ. Lille, CNRS, Inria, Centrale Lille, UMR 9189 CRIStAL, France",
+                "output": {
+                    "department": "",
+                    "organization": "Univ. Lille, CNRS, Inria, Centrale Lille, UMR 9189 CRIStAL",
+                    "location": "France"
+                }
+            },
+            {
+                "input": "Cheriton School of Computer Science, University of Waterloo, Canada",
+                "output": {
+                    "department": "Cheriton School of Computer Science",
+                    "organization": "University of Waterloo",
+                    "location": "Canada"
+                }
+            }
+        ]
+    }
+}

@@ -2,18 +2,18 @@ import axios from 'axios'
 import { parseHTML } from 'linkedom'
 import { chromium, Page } from 'playwright'
 
+import { extractLocation } from './affiliation'
 import fetchMetadata from './doi'
 
 // Get titles
 export const getTitles = async (page: Page) => {
     // Wait for the selector to appear
-    const selector = 'div[class="ui divided list"]'
+    const selector = 'div[class="ui divided list"] a'
     await page.waitForSelector(selector)
 
-    const titles = await page.$$eval(selector, (nodes) =>
-        nodes.map((e) => (e as HTMLElement).innerText)
-    )
-    return titles[0].split('\n')
+    // Extract titles
+    const titles = await page.$$eval(selector, (nodes) => nodes.map((e) => e.textContent ?? ''))
+    return titles
 }
 
 // Get authors
@@ -26,7 +26,7 @@ export const getAuthors = async (page: Page) => {
     const authorsAll = await page.$$eval(selector, (nodes) => {
         return nodes.map((e) => {
             const nodes = e.querySelectorAll('.header')
-            return Array.from(nodes, (e) => e.textContent)
+            return Array.from(nodes, (e) => e.textContent ?? '')
         })
     })
     return authorsAll
@@ -42,7 +42,7 @@ export const getAffiliations = async (page: Page) => {
     const affiliationsList = await page.$$eval(selector, (nodes) => {
         return nodes.map((e) => {
             const nodes = e.querySelectorAll('.description')
-            return Array.from(nodes, (e) => e.textContent)
+            return Array.from(nodes, (e) => e.textContent ?? '')
         })
     })
     return affiliationsList
@@ -65,13 +65,15 @@ export const fetchMetadataList = async (url: string) => {
     await page.close()
     await browser.close()
 
-    // // Iterate over each paper to get metadata
-    const metadata = titles.map((title, i) => ({
-        title,
-        authors: authorsList[i],
-        affiliations: affiliationsList[i],
-    }))
-    return metadata
+    // Get the organization names
+    const promises = Promise.all(affiliationsList.map((e) => Promise.all(e.map(extractLocation))))
+    const organizationsList = (await promises).map((e) => e.map((f) => f.fullOrganization))
+
+    // Integrate the metadata
+    const metadataList = titles.map((title, i) => {
+        return { title, authors: authorsList[i], affiliations: organizationsList[i] }
+    })
+    return metadataList
 }
 
 // Fetch a list of doi in a session page
@@ -80,7 +82,7 @@ export const fetchDois = async (url: string) => {
     const response = await axios.get(url)
     const { document } = parseHTML(response.data)
 
-    // Get the doi list
+    // Extract the doi urls
     const selector = 'div[class="ui top attached segment"] > div > a'
     const nodes = document.querySelectorAll(selector)
     const dois = Array.from(nodes, (e) => e.textContent ?? '')
@@ -93,6 +95,12 @@ export const fetchMetadataListViaDoi = async (url: string) => {
     const dois = await fetchDois(url)
 
     // Get the metadata of the papers via Crossref REST API
-    const paperMetadataList = await Promise.all(dois.map(fetchMetadata))
-    return paperMetadataList
+    const metadataList = await Promise.all(dois.map(fetchMetadata))
+
+    // Extract title, authors, and organizations
+    const paperInfo = metadataList.map((e) => {
+        const organizations = e.affiliations.map(({ organization }) => organization)
+        return { ...e, affiliations: organizations }
+    })
+    return paperInfo
 }
