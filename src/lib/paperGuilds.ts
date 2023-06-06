@@ -2,7 +2,11 @@ import { chromium, Page } from 'playwright'
 
 // Get titles
 export const getTitles = async (page: Page) => {
-    const titles = await page.$$eval('div[class="ui divided list"]', (nodes) =>
+    // Wait for the selector to appear
+    const selector = 'div[class="ui divided list"]'
+    await page.waitForSelector(selector)
+
+    const titles = await page.$$eval(selector, (nodes) =>
         nodes.map((e) => (e as HTMLElement).innerText)
     )
     return titles[0].split('\n')
@@ -10,16 +14,15 @@ export const getTitles = async (page: Page) => {
 
 // Get authors
 export const getAuthors = async (page: Page) => {
-    const authorsAll = await page.evaluate(() => {
-        // Get all of authors information with affiliations
-        const authorsWithAffilsAll = Array.from(
-            document.querySelectorAll('.main div[class="ui divided horizontal list"]')
-        )
+    // Wait for the selector to appear
+    const selector = '.main div[class="ui divided horizontal list"]'
+    await page.waitForSelector(selector)
 
-        // Extract author names
-        return authorsWithAffilsAll.map((e) => {
+    // Extract author names
+    const authorsAll = await page.$$eval(selector, (nodes) => {
+        return nodes.map((e) => {
             const nodes = e.querySelectorAll('.header')
-            return Array.from(nodes, (node) => node.textContent)
+            return Array.from(nodes, (e) => e.textContent)
         })
     })
     return authorsAll
@@ -27,22 +30,22 @@ export const getAuthors = async (page: Page) => {
 
 // Get affiliations
 export const getAffils = async (page: Page) => {
-    const affilsAll = await page.evaluate(() => {
-        // Get all of authors information with affiliations
-        const authorsWithAffilsAll = Array.from(
-            document.querySelectorAll('.main div[class="ui divided horizontal list"]')
-        )
+    // Wait for the selector to appear
+    const selector = '.main div[class="ui divided horizontal list"]'
+    await page.waitForSelector(selector)
 
-        // Extract organization names
-        return authorsWithAffilsAll.map((e) => {
+    // Extract organization names
+    const affilsAll = await page.$$eval(selector, (nodes) => {
+        return nodes.map((e) => {
             const nodes = e.querySelectorAll('.description')
-            return Array.from(nodes, (node) => node.textContent)
+            return Array.from(nodes, (e) => e.textContent)
         })
     })
     return affilsAll
 }
 
-export const fetchPapersInfo = async (url: string) => {
+// Get a list of metadata of papers in a session page
+export const fetchMetadataList = async (url: string) => {
     // Fetch html and get the document object
     const browser = await chromium.launch()
     const context = await browser.newContext()
@@ -58,8 +61,11 @@ export const fetchPapersInfo = async (url: string) => {
     await page.close()
     await browser.close()
 
-    // Iterate over each paper to get metadata
-    return titles.map((title, i) => ({ title, authors: authorsAll[i], affils: affilsAll[i] }))
+    // // Iterate over each paper to get metadata
+    const metadata = titles.map((title, i) => ({
+        title,
+        authors: authorsAll[i],
+        affiliations: affilsAll[i],
+    }))
+    return metadata
 }
-
-export default fetchPapersInfo
