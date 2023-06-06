@@ -1,5 +1,3 @@
 export default function Inspector() {
-  return (
-    <></>
-  )
+    return <></>
 }
