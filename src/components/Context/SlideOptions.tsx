@@ -1,6 +1,5 @@
+import { SlideOptions } from '@lib/types'
 import { createContext, ReactNode, useState } from 'react'
-
-import { SlideOptions } from '@/lib/types'
 
 interface SlideOptionsContext {
     slideOptions: SlideOptions

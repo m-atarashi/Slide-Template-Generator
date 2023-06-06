@@ -1,6 +1,5 @@
 import pptxgenjs from 'pptxgenjs'
-
-import SlideOptions from '@/slideOptions/demo.json'
+import SlideOptions from 'slideOptions/demo.json'
 
 import { PaperInfo } from './types'
 

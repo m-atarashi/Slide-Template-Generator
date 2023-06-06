@@ -1,6 +1,5 @@
+import { PapersInfoContext } from '@components/Context/PapersInfo'
 import { useContext } from 'react'
-
-import { PapersInfoContext } from '@/components/Context/PapersInfo'
 
 // 論文情報のデバッグ表示
 export default function Debug() {

@@ -1,6 +1,5 @@
+import { PapersInfoContext } from '@components/Context/PapersInfo'
 import { useContext } from 'react'
-
-import { PapersInfoContext } from '@/components/Context/PapersInfo'
 
 export default function Slide(props: { slideNumber: number }) {
     const { papersInfo } = useContext(PapersInfoContext)

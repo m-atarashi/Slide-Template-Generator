@@ -1,6 +1,5 @@
+import { PaperInfo } from '@lib/types'
 import { createContext, ReactNode, useState } from 'react'
-
-import { PaperInfo } from '@/lib/types'
 
 interface PapersInfoContext {
     papersInfo: PaperInfo[]

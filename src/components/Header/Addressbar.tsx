@@ -1,6 +1,5 @@
+import { PapersInfoContext } from '@components/Context/PapersInfo'
 import { KeyboardEvent, useCallback, useContext } from 'react'
-
-import { PapersInfoContext } from '@/components/Context/PapersInfo'
 
 // 論文やセッションのURLを入力するアドレスバー
 export default function Addressbar() {

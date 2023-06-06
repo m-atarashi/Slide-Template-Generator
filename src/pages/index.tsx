@@ -1,14 +1,13 @@
+import { PapersInfoContextProvider } from '@components/Context/PapersInfo'
+import { SlideOptionsContextProvider } from '@components/Context/SlideOptions'
+import Debug from '@components/Debug'
+import Editor from '@components/Editor'
+import Filmstrip from '@components/Editor/Filmstrip'
+import Inspector from '@components/Editor/Inspector'
+import Preview from '@components/Editor/Preview'
+import Header from '@components/Header'
+import Templates from '@components/Templates'
 import { useState } from 'react'
-
-import { PapersInfoContextProvider } from '@/components/Context/PapersInfo'
-import { SlideOptionsContextProvider } from '@/components/Context/SlideOptions'
-import Debug from '@/components/Debug'
-import Editor from '@/components/Editor'
-import Filmstrip from '@/components/Editor/Filmstrip'
-import Inspector from '@/components/Editor/Inspector'
-import Preview from '@/components/Editor/Preview'
-import Header from '@/components/Header'
-import Templates from '@/components/Templates'
 
 export default function Index() {
     const [activeSlideNumber, setActiveSlideNumber] = useState(0)
