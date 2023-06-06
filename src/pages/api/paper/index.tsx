@@ -1,6 +1,7 @@
-import { getMetadata } from '@lib/PaperGuilds'
 import { NextApiHandler } from 'next'
 import { z } from 'zod'
+
+import { getMetadata } from '@/lib/PaperGuilds'
 
 const handler: NextApiHandler = async (req, res) => {
     if (req.method === 'GET') {
