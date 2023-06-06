@@ -1,4 +1,8 @@
+import axios from 'axios'
+import { parseHTML } from 'linkedom'
 import { chromium, Page } from 'playwright'
+
+import fetchMetadata from './doi'
 
 // Get titles
 export const getTitles = async (page: Page) => {
@@ -68,4 +72,27 @@ export const fetchMetadataList = async (url: string) => {
         affiliations: affilsAll[i],
     }))
     return metadata
+}
+
+// Fetch a list of doi in a session page
+export const fetchDois = async (url: string) => {
+    // Fetch html and get the document object
+    const response = await axios.get(url)
+    const { document } = parseHTML(response.data)
+
+    // Get the doi list
+    const selector = 'div[class="ui top attached segment"] > div > a'
+    const nodes = document.querySelectorAll(selector)
+    const dois = Array.from(nodes, (e) => e.textContent ?? '')
+    return dois
+}
+
+// Get a list of metadata of papers in a session page via doi
+export const fetchMetadataListViaDoi = async (url: string) => {
+    // Get the doi uri list from the session page
+    const dois = await fetchDois(url)
+
+    // Get the metadata of the papers via Crossref REST API
+    const paperMetadataList = await Promise.all(dois.map(fetchMetadata))
+    return paperMetadataList
 }

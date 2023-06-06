@@ -1,6 +1,13 @@
 import { chromium } from 'playwright'
 
-import { fetchMetadataList, getAffils, getAuthors, getTitles } from '../paperGuilds'
+import {
+    fetchDois,
+    fetchMetadataList,
+    fetchMetadataListViaDoi,
+    getAffils,
+    getAuthors,
+    getTitles,
+} from '../paperGuilds'
 import cases from './paperGuilds.case.json'
 
 describe('fetchTitles', () => {
@@ -69,6 +76,26 @@ describe('fetchMetadataList', () => {
         'Positive testing',
         async ({ input, output }) => {
             const metadataList = await fetchMetadataList(input)
+            expect(metadataList).toEqual(output)
+        },
+        10000
+    )
+})
+
+describe('fetchDois', () => {
+    // Positive testing
+    test.each(cases.fetchDois.positive)('Positive testing', async ({ input, output }) => {
+        const dois = await fetchDois(input)
+        expect(dois).toEqual(output)
+    })
+})
+
+describe('fetchMetadataListViaDoi', () => {
+    // Positive testing
+    test.each(cases.fetchMetadataListViaDoi.positive)(
+        'Positive testing',
+        async ({ input, output }) => {
+            const metadataList = await fetchMetadataListViaDoi(input)
             expect(metadataList).toEqual(output)
         },
         10000
