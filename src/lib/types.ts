@@ -3,7 +3,7 @@ import pptxgenjs from 'pptxgenjs'
 export interface PaperInfo {
     title: string
     authors: string[]
-    affils: string[]
+    affiliations: string[]
 }
 
 export interface SlideOptions extends pptxgenjs.TextProps {

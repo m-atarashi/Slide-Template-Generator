@@ -14,7 +14,8 @@ export default function Addressbar() {
 
             // fetch papers information from the inner api
             const url = e.currentTarget.value
-            const res = await fetch(`/api/paper?${url}`)
+            const query = new URLSearchParams({ url })
+            const res = await fetch(`/api/paper?${query}`)
             const message = await res.json()
 
             // update the context for papers information
