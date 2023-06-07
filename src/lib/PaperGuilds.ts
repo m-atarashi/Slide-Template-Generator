@@ -49,7 +49,7 @@ export const getMetadata = async (url: string) => {
 
     // Get the conference program
     const conferenceName = getConferenceName(url)
-    const program = await import(`../data/programs/${conferenceName}.json`)
+    const program = await import(`../../public/data/programs/${conferenceName}.json`)
 
     // Get the session data
     const sessionName = await fetchSessionName(url)
@@ -86,7 +86,3 @@ export const getMetadata = async (url: string) => {
 
     return metadataList
 }
-
-getMetadata('https://pgl.jp/seminars/chi2023/sessions/646bb5fb7fb3e6002aabf6a7').then((res) =>
-    console.log(JSON.stringify(res, null, 4))
-)

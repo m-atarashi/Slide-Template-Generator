@@ -1,4 +1,4 @@
-import { PapersInfoContext } from '@components/Context/PapersInfo'
+import { PapersMetadataContext } from '@components/Context/PapersMetadata'
 import Thumbnail from '@components/Editor/Filmstrip/Thumbnail'
 import { Dispatch, SetStateAction } from 'react'
 import { useContext } from 'react'
@@ -8,11 +8,11 @@ export default function Filmstrip(props: {
     activeSlideNumber: number
     setActiveSlideNumber: Dispatch<SetStateAction<number>>
 }) {
-    const { papersInfo } = useContext(PapersInfoContext)
+    const { papersMetadata } = useContext(PapersMetadataContext)
     return (
         <>
             <div className="filmstrip w-[12%] flex-col p-2 space-y-4 overflow-y-scroll rounded-md">
-                {papersInfo.map((_, index) => (
+                {papersMetadata.map((_, index) => (
                     <div key={index}>
                         <Thumbnail slideNumber={index} {...props} />
                     </div>

@@ -1,96 +1,124 @@
-import pptxgenjs from 'pptxgenjs'
+import PptxGenJS from 'PptxGenJS'
 
-import SlideOptions from '../data/slideOptions/demo.json'
-import { PaperInfo } from './types'
+import { PaperMetadata, SlideOptions } from './types'
 
 // Get the authors separated by commas with reference numbers
-// e.g. John Doe^1, Jane Doe^2, ...
-const getAuthorsTextProps = (authors: string[], affiliations: string[]) => {
-    const ret: pptxgenjs.TextProps[] = []
-    const affiliationUnique = [...new Set(affiliations)]
+// e.g. John Doe^1, ^2, Jane Doe^2, ...
+const getAuthorsTextProps = (authors: string[], affiliations: string[][]) => {
+    // Vancouver style
+    if (authors.length >= 7) {
+        authors = authors.slice(0, 6)
+        authors.push('et al.')
+        affiliations = affiliations.slice(0, 6)
+        affiliations.push([])
+    }
 
+    // Delete duplicate
+    const affiliationUnique = [...new Set(affiliations.flat())]
+
+    const textProps: PptxGenJS.TextProps[] = []
     authors.forEach((author, index) => {
         // Add the author
-        ret.push({ text: author })
+        textProps.push({ text: author })
 
-        // Add the reference number
-        const num = affiliationUnique.findIndex((e) => e === affiliations[index]) + 1
-        ret.push({
-            text: num.toString(),
-            options: { superscript: true },
-        })
+        // Add the reference numbers
+        const nums = affiliations[index]
+            .map((affiliation) => affiliationUnique.findIndex((e) => e === affiliation) + 1)
+            .sort()
+        // Add the reference numbers
+        textProps.push({ text: nums.join(', '), options: { superscript: true } })
 
         // Add the separator
-        if (index === authors.length - 2) ret.push({ text: ' and ' })
-        else if (index !== authors.length - 1) ret.push({ text: ', ' })
+        if (index === authors.length - 2) {
+            // a separator between last two authors
+            if (authors.length < 7) textProps.push({ text: ' and ' })
+            else textProps.push({ text: ', ' })
+        } else if (index !== authors.length - 1) textProps.push({ text: ', ' })
     })
-    return ret
+    return textProps
 }
 
 // Get the affiliations separated by commas with reference numbers
 // e.g. ^1University of Tokyo, ^2Kyoto University, ...
-const getAffiliationsTextProps = (affiliations: string[]) => {
-    // Delete duplicates
-    const affiliationUnique = [...new Set(affiliations.map((e) => e.split(',')[0]))]
-    const ret: pptxgenjs.TextProps[] = []
+const getAffiliationsTextProps = (affiliations: string[][]) => {
+    // Vancouver style
+    if (affiliations.length >= 7) {
+        affiliations = affiliations.slice(0, 6)
+    }
 
+    // Delete duplicate
+    const affiliationUnique = [...new Set(affiliations.flat())]
+
+    const textProps: PptxGenJS.TextProps[] = []
     affiliationUnique.forEach((affiliation, index) => {
         // Add the reference number
-        ret.push({
+        textProps.push({
             text: (index + 1).toString(),
             options: { superscript: true },
         })
         // Add the affiliation
-        ret.push({ text: affiliation })
+        textProps.push({ text: affiliation })
+
         // Add the separator
-        if (index !== affiliationUnique.length - 1) ret.push({ text: ', ' })
+        if (index !== affiliationUnique.length - 1) textProps.push({ text: ', ' })
     })
-    return ret
+    return textProps
 }
 
-// Options
-const options = SlideOptions.options as pptxgenjs.TextProps
-const additionalOptions = SlideOptions.additionalOptions
-const { titleFontSize, authorFontSize, affiliationFontSize, backgroundColor } = additionalOptions
-
-export const save = (papersInfo: PaperInfo[]) => {
+// Save the presentation
+export const save = async (papersMetadata: PaperMetadata[], slideOptions: SlideOptions) => {
+    const { header } = slideOptions
     // Create a new presentation
-    let pres = new pptxgenjs()
+    let pptx = new PptxGenJS()
 
     // Create slides
-    papersInfo.forEach(({ title, authors, affiliations }) => {
-        let y, h, fontSize
-
+    papersMetadata.forEach(({ title, authors, affiliations, doi }) => {
         // Add a slide
-        let slide = pres.addSlide()
+        let slide = pptx.addSlide()
 
-        // Background
-        h = (titleFontSize * 2 * 1.5 + authorFontSize * 1.5 + affiliationFontSize * 1.5) / 72
-        slide.addShape(pres.ShapeType.rect, { ...options, h, fill: { color: backgroundColor } })
+        const titleProps = { text: title, options: header.title }
+        // Add a hyperlink to the title text
+        if (header.titleLink === 'underline') {
+            titleProps.options.hyperlink = { url: doi }
+        }
 
-        // Title
-        y = 0
-        fontSize = titleFontSize
-        h = (fontSize * 2 * 1.5) / 72
-        slide.addText(title, { ...options, y, h, fontSize, bold: true })
+        const authorProps = getAuthorsTextProps(authors, affiliations).map((e) => ({
+            text: e.text,
+            options: { ...header.author, ...e.options },
+        }))
 
-        // Authors
-        y += h
-        fontSize = authorFontSize
-        h = (fontSize * 1.5) / 72
-        const authorsWithRef = getAuthorsTextProps(authors, affiliations)
-        slide.addText(authorsWithRef, { ...options, y, h, fontSize })
+        const affiliationProps = getAffiliationsTextProps(affiliations).map((e) => ({
+            text: e.text,
+            options: { ...header.affiliation, ...e.options },
+        }))
 
-        // Affiliations
-        y += h
-        fontSize = affiliationFontSize
-        h = (fontSize * 1.5) / 72
-        const affiliationsWithRef = getAffiliationsTextProps(affiliations)
-        slide.addText(affiliationsWithRef, { ...options, y, h, fontSize })
+        // Add texts of the title, authors and affiliations
+        slide.addText([titleProps, ...authorProps, { text: '\n' }, ...affiliationProps], {
+            ...header.general,
+        })
+
+        // Add a hyperlink rectangle on the title
+        if (header.titleLink === 'over') {
+            addHyperlinkRect(slide, header.general, doi)
+        }
     })
 
     // Save the presentation
-    pres.writeFile()
+    await pptx.writeFile()
+}
+
+// Add a hyperlink rectangle
+export const addHyperlinkRect = (
+    slide: PptxGenJS.Slide,
+    shapeProps: PptxGenJS.ShapeProps,
+    url: string
+) => {
+    slide.addShape('rect', {
+        ...shapeProps,
+        line: { color: '000000', transparency: 100 },
+        fill: { color: '000000', transparency: 100 },
+        hyperlink: { url },
+    })
 }
 
 export default save

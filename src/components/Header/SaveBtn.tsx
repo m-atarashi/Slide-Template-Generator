@@ -1,13 +1,15 @@
-import { PapersInfoContext } from '@components/Context/PapersInfo'
+import { PapersMetadataContext } from '@components/Context/PapersMetadata'
+import { SlideOptionsContext } from '@components/Context/SlideOptions'
 import save from '@lib/presentation'
 import { useCallback, useContext } from 'react'
 
 export default function SaveBtn() {
-    const { papersInfo } = useContext(PapersInfoContext)
+    const { papersMetadata } = useContext(PapersMetadataContext)
+    const { slideOptions, setSlideOptions } = useContext(SlideOptionsContext)
 
-    const handleClick = useCallback(() => {
-        save(papersInfo)
-    }, [papersInfo])
+    const handleClick = useCallback(async () => {
+        await save(papersMetadata, slideOptions)
+    }, [papersMetadata, slideOptions])
 
     return (
         <>

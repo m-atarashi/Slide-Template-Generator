@@ -1,20 +1,20 @@
-import { PapersInfoContext } from '@components/Context/PapersInfo'
+import { PapersMetadataContext } from '@components/Context/PapersMetadata'
 import { useContext } from 'react'
 
 // 論文情報のデバッグ表示
 export default function Debug() {
-    const { papersInfo } = useContext(PapersInfoContext)
+    const { papersMetadata } = useContext(PapersMetadataContext)
     return (
         <>
-            <p>{papersInfo?.length} papers found</p>
-            {papersInfo?.length > 0
-                ? papersInfo.map((paperInfo) => (
-                      <p key={paperInfo.title}>
-                          {paperInfo.title}
+            <p>{papersMetadata?.length} papers found</p>
+            {papersMetadata?.length > 0
+                ? papersMetadata.map(({ title, authors, affiliations }) => (
+                      <p key={title}>
+                          {title}
                           <br />
-                          {paperInfo.authors?.join(', ')}
+                          {authors?.join(', ')}
                           <br />
-                          {paperInfo.affiliations}
+                          {affiliations}
                       </p>
                   ))
                 : null}

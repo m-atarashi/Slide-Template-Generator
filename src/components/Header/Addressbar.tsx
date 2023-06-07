@@ -1,9 +1,9 @@
-import { PapersInfoContext } from '@components/Context/PapersInfo'
+import { PapersMetadataContext } from '@components/Context/PapersMetadata'
 import { KeyboardEvent, useCallback, useContext } from 'react'
 
 // 論文やセッションのURLを入力するアドレスバー
 export default function Addressbar() {
-    const { setPapersInfo } = useContext(PapersInfoContext)
+    const { setPapersMetadata } = useContext(PapersMetadataContext)
 
     // キーボードのEnterキーが押されたときに実行される関数
     const keyDownHandler = useCallback(
@@ -18,10 +18,10 @@ export default function Addressbar() {
             const message = await res.json()
 
             // update the context for papers information
-            setPapersInfo(message)
+            setPapersMetadata(message)
             console.log(message)
         },
-        [setPapersInfo]
+        [setPapersMetadata]
     )
 
     return (

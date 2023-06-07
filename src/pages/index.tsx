@@ -1,4 +1,4 @@
-import { PapersInfoContextProvider } from '@components/Context/PapersInfo'
+import { PapersMetadataContextProvider } from '@components/Context/PapersMetadata'
 import { SlideOptionsContextProvider } from '@components/Context/SlideOptions'
 import Debug from '@components/Debug'
 import Editor from '@components/Editor'
@@ -12,7 +12,7 @@ import { useState } from 'react'
 export default function Index() {
     const [activeSlideNumber, setActiveSlideNumber] = useState(0)
     return (
-        <PapersInfoContextProvider>
+        <PapersMetadataContextProvider>
             <SlideOptionsContextProvider>
                 <Header />
                 <Templates />
@@ -26,6 +26,6 @@ export default function Index() {
                 </Editor>
                 <Debug /> {/* デバッグ用 */}
             </SlideOptionsContextProvider>
-        </PapersInfoContextProvider>
+        </PapersMetadataContextProvider>
     )
 }

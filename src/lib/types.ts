@@ -1,15 +1,20 @@
-import pptxgenjs from 'pptxgenjs'
+import PptxGenJS from 'PptxGenJS'
 
-export interface PaperInfo {
+export interface PaperMetadata {
     title: string
     authors: string[]
-    affiliations: string[]
+    affiliations: string[][]
+    award: string
+    doi: string
 }
 
-export interface SlideOptions extends pptxgenjs.TextProps {
-    titleFontSize: number
-    authorFontSize: number
-    affiliationFontSize: number
-    textColor: string
-    backgroundColor: string
+export interface SlideOptions {
+    header: {
+        general: any
+        title: PptxGenJS.TextPropsOptions
+        author: PptxGenJS.TextPropsOptions
+        affiliation: PptxGenJS.TextPropsOptions
+        award?: PptxGenJS.ImageProps
+        titleLink?: 'underline' | 'over'
+    }
 }
