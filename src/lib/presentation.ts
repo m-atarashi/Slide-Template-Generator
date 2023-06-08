@@ -1,4 +1,4 @@
-import PptxGenJS from 'PptxGenJS'
+import PptxGenJS from 'pptxgenjs'
 
 import { enumerateAffils, enumerateAuthors } from './parseAffiliation'
 import { PaperMetadata, Theme } from './types'

@@ -1,4 +1,4 @@
-import PptxGenJS from 'PptxGenJS'
+import PptxGenJS from 'pptxgenjs'
 
 export const propsToStyle = (props: any, scale: number) => {
     const styles: { [key: string]: any } = {}

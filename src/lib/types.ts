@@ -1,4 +1,4 @@
-import PptxGenJS from 'PptxGenJS'
+import PptxGenJS from 'pptxgenjs'
 
 export interface PaperMetadata {
     title: string
