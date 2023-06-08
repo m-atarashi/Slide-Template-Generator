@@ -1,40 +1,41 @@
 import { useEffect, useState } from 'react'
 
 export default function SlideContainer({ children }: { children: React.ReactNode }) {
-    const [slideSize, setSlideSize] = useState({ w: 0, h: 0 })
+    const [slideWidth, setSlideWidth] = useState('100%')
 
+    // スライドのサイズを更新処理をリサイズイベントハンドラとして登録する
     useEffect(() => {
-        // スライドのサイズを更新する関数
         const updateSlideSize = () => {
-            // プレビューの大きさ
-            const container = document.querySelector('.preview-container .frame')
-            const containerRect = container?.getBoundingClientRect()
-            const containerWidth = containerRect?.width ?? 0
-            const containerHeight = containerRect?.height ?? 0
+            // プレビューの幅と高さ
+            const preview = document.querySelector('.preview .frame')
+            const DOMRect = preview?.getBoundingClientRect()
+            let previewWidth = DOMRect?.width ?? 0
+            let previewHeight = DOMRect?.height ?? 0
 
-            // スライドの大きさ
-            let slideWidth = Math.min(containerWidth, (containerHeight * 16) / 9)
-            let slideHeight = Math.min(containerHeight, (containerWidth * 9) / 16)
-            slideWidth = Math.floor(slideWidth)
-            slideHeight = Math.floor(slideHeight)
+            // コンテナ要素のパディングを引く
+            const slideContainer = document.querySelector('.slide-container') as Element
+            const padding = window.getComputedStyle(slideContainer).padding
+            previewWidth -= parseInt(padding)
+            previewHeight -= parseInt(padding)
 
-            setSlideSize({ w: slideWidth, h: slideHeight })
+            // プレビューの高さに合わせた16:9の幅
+            const width = Math.floor((previewHeight * 16) / 9)
+            // プレビューからはみ出る場合はプレビューの幅に合わせる
+            if (previewWidth < width) setSlideWidth('100%')
+            else setSlideWidth(`${width}px`)
         }
 
-        // 初回レンダリング時に計算を行う
+        // 初回レンダリング
         updateSlideSize()
 
-        // リサイズイベントハンドラとして登録・解除する
         window.addEventListener('resize', updateSlideSize)
-        return () => {
-            window.removeEventListener('resize', updateSlideSize)
-        }
+        return () => window.removeEventListener('resize', updateSlideSize)
     }, [])
 
     return (
         <div
-            className="flex items-center justify-center p-1"
-            style={{ width: `${slideSize.w}px`, height: `${slideSize.h}px` }}
+            className="slide-container flex items-center justify-center p-1"
+            style={{ width: slideWidth }}
         >
             {children}
         </div>

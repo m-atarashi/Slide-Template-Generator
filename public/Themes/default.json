@@ -1,0 +1,28 @@
+{
+    "header": {
+        "general": {
+            "w": "100%",
+            "h": "20%",
+            "x": 0,
+            "y": 0,
+            "margin": 1,
+            "align": "center",
+            "valign": "middle",
+            "fit": "shrink",
+            "fill": { "color": "ffffff" },
+            "color": "000000"
+        },
+        "title": {
+            "breakLine": true,
+            "fontSize": 20,
+            "bold": false
+        },
+        "author": {
+            "fontSize": 10
+        },
+        "affiliation": {
+            "fontSize": 10
+        },
+        "titleLink": "over"
+    }
+}

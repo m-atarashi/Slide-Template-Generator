@@ -2,7 +2,7 @@
     "header": {
         "general": {
             "w": "100%",
-            "h": "10%",
+            "h": "20%",
             "x": 0,
             "y": 0,
             "margin": 1,
@@ -14,7 +14,6 @@
         },
         "title": {
             "breakLine": true,
-            "lineHeight": 1.4,
             "fontSize": 20,
             "bold": false
         },
@@ -24,6 +23,6 @@
         "affiliation": {
             "fontSize": 10
         },
-        "titleLink": "over"
+        "titleLink": "underline"
     }
 }

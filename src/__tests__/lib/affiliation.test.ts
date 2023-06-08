@@ -1,4 +1,4 @@
-import * as affils from '@lib/affiliation'
+import * as affils from '@lib/parseAffiliation'
 
 import cases from './affiliation.case.json'
 
@@ -8,17 +8,6 @@ describe('extractLocationWithGeonames', () => {
         'Positive testing',
         async ({ input, output }) => {
             const location = await affils.extractLocationWithGeonames(input)
-            expect(location).toEqual(output)
-        }
-    )
-})
-
-describe('extractLocationWithNinjas', () => {
-    // Positive testing
-    test.each(cases.extractLocationWithNinjas.positive)(
-        'Positive testing',
-        async ({ input, output }) => {
-            const location = await affils.extractLocationWithNinjas(input)
             expect(location).toEqual(output)
         }
     )

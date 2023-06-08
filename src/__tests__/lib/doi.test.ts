@@ -1,11 +1,11 @@
-import { fetchFromCrossref, fetchMetadata } from '@lib/doi'
+import { fetchCrossref, fetchMetadata } from '@lib/doi'
 
 import cases from './doi.case.json'
 
 describe('fetchCrossref', () => {
     // Positive testing
     test.each(cases.fetchCrossref.positive)('Positive testing', async ({ input, output }) => {
-        const metadata = await fetchFromCrossref(input)
+        const metadata = await fetchCrossref(input)
         expect(metadata).toEqual(output)
     })
 })

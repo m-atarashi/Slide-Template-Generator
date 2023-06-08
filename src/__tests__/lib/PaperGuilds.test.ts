@@ -1,4 +1,4 @@
-import { fetchSessionName, getConferenceName, validateSessionPage } from '@/lib/PaperGuilds'
+import { fetchSessionName, getConferenceName, validateSessionPage } from '@lib/PaperGuilds'
 
 import cases from './PaperGuilds.case.json'
 

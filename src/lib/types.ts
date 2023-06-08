@@ -8,7 +8,7 @@ export interface PaperMetadata {
     doi: string
 }
 
-export interface SlideOptions {
+export interface Theme {
     header: {
         general: any
         title: PptxGenJS.TextPropsOptions
@@ -17,4 +17,10 @@ export interface SlideOptions {
         award?: PptxGenJS.ImageProps
         titleLink?: 'underline' | 'over'
     }
+}
+
+export interface ThemeInformation {
+    name: string
+    description: string
+    path: string
 }

@@ -1,88 +1,76 @@
 import axios from 'axios'
 import { parseHTML } from 'linkedom'
 
-// Validate the URL
+// 与えられた URL がセッションページかどうかを検証する
 export const validateSessionPage = (url: string) => {
-    // Check if the URL is session page
-    const isSessionPage = RegExp('^https://pgl.jp/seminars/.+/sessions/.+$')
-    if (isSessionPage.test(url) === false) throw new Error('Invalid URL')
-
-    // Session id is 24-digit hexadecimal number
-    const isExists = RegExp('^https://pgl.jp/seminars/.+/sessions/[a-fA-F0-9]{24}$')
-    if (isExists.test(url) === false) throw new Error('Invalid URL')
+    const regex = RegExp('^https://pgl.jp/seminars/.+/sessions/[a-fA-F0-9]{24}$')
+    if (regex.test(url) === false) {
+        throw new Error('Invalid URL')
+    }
 }
 
-// Get the conference name
+// URL から会議の名称を取得する
 export const getConferenceName = (url: string) => {
-    // Validate the URL
     validateSessionPage(url)
 
-    // Extract the conference name
     const regex = RegExp('^https://pgl\\.jp/seminars/(.+?)/sessions/.+$')
     const match = url.match(regex)
     if (match === null) throw new Error('Invalid URL')
+
     return match[1]
 }
 
-// Get the session name
+// セッションの題目を静的なスクレイピングにより取得する
 export const fetchSessionName = async (url: string) => {
-    // Validate the URL
     validateSessionPage(url)
 
-    // Fetch html and get the document object
     const response = await axios.get(url)
     const { document } = parseHTML(response.data)
 
-    // Extract the session name
     const selector = 'div.main h1.header'
     let sessionName = document.querySelector(selector)?.textContent ?? ''
 
-    // Remove the session number
+    // セッション番号を削除する
     sessionName = sessionName.split('. ').splice(1).join('')
     return sessionName
 }
 
 // Get a list of metadata of papers in a session page
 export const getMetadata = async (url: string) => {
-    // Validate the URL
     validateSessionPage(url)
 
-    // Get the conference program
+    // プログラムのJSON ファイルを読み込む
     const conferenceName = getConferenceName(url)
     const program = await import(`../../public/data/programs/${conferenceName}.json`)
 
-    // Get the session data
+    // セッション名からセッションの情報を全探索する。各論文の ID が含まれる
     const sessionName = await fetchSessionName(url)
     const session = program.sessions.find((e: any) => e.name === sessionName)
 
-    // Get the papers
+    // 論文の ID から論文情報を全探索する
     const papers = session.contentIds.map((contentId: number) =>
-        program.contents.find((e: any) => e.id === contentId)
+        program.contents.find((paper: any) => paper.id === contentId)
     )
 
     const metadataList = []
-
-    // Get the metadata for each paper
     for (const paper of papers) {
-        // Get the authors
         const authors: string[] = paper.authors.map((author: any) => {
-            const person = program.people.find((e: any) => e.id === author.personId)
+            const person = program.people.find((person: any) => person.id === author.personId)
             return person.firstName + ' ' + person.lastName
         })
 
-        // Get the affiliations
         const affiliations: string[][] = paper.authors.map((author: any) => {
-            const institutions: string[] = author.affiliations.map((e: any) => e.institution)
+            const institutions: string[] = author.affiliations.map(
+                (affil: any) => affil.institution
+            )
+            // 同じ所属情報が複数登録されている場合がある
             return [...new Set(institutions)]
         })
 
-        // Get other metadata
-        const award: string = paper.award ?? ''
         const doi: string = paper.addons.doi.url ?? ''
+        const award: string = paper.award ?? ''
 
-        const metadata = { title: paper.title as string, authors, affiliations, award, doi }
-        metadataList.push(metadata)
+        metadataList.push({ title: paper.title as string, authors, affiliations, award, doi })
     }
-
     return metadataList
 }

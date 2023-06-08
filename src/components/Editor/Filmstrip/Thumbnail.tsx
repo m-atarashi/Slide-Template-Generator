@@ -1,32 +1,31 @@
-import { Dispatch, SetStateAction, useCallback, useMemo } from 'react'
+import { Dispatch, SetStateAction, useCallback } from 'react'
 
 import Slide from '../Slide'
 
 // スライド・サムネイル
 export default function Thumbnail(props: {
-    activeSlideNumber: number
-    setActiveSlideNumber: Dispatch<SetStateAction<number>>
-    slideNumber: number
+    slideIndex: number
+    activeSlideIndex: number
+    setActiveSlideIndex: Dispatch<SetStateAction<number>>
 }) {
-    const { activeSlideNumber, setActiveSlideNumber, slideNumber } = props
+    const { slideIndex, activeSlideIndex, setActiveSlideIndex } = props
 
     // クリックしたスライドをアクティブにする
-    const clickHandler = useCallback(() => {
-        setActiveSlideNumber(slideNumber)
-    }, [setActiveSlideNumber, slideNumber])
+    const clickHandler = useCallback(
+        (slideIndex: number) => setActiveSlideIndex(slideIndex),
+        [setActiveSlideIndex]
+    )
 
     // アクティブなサムネイルの tailwind のクラス
-    const activeClass = useMemo(() => {
-        return activeSlideNumber === slideNumber ? 'border-sky-600' : ''
-    }, [activeSlideNumber, slideNumber])
+    const activeClass = activeSlideIndex === slideIndex ? 'border-sky-600' : ''
 
     return (
         <button
             className={`thumbnail w-full p-1 border-2 rounded-lg overflow-hidden ${activeClass}`}
             type="button"
-            onClick={clickHandler}
+            onClick={() => clickHandler(slideIndex)}
         >
-            <Slide slideNumber={slideNumber} />
+            <Slide slideIndex={slideIndex} />
         </button>
     )
 }

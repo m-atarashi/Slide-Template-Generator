@@ -3,18 +3,18 @@ import Thumbnail from '@components/Editor/Filmstrip/Thumbnail'
 import { Dispatch, SetStateAction } from 'react'
 import { useContext } from 'react'
 
-// 左側のスライド・サムネイル一覧
+// ページを選択するためのUI
 export default function Filmstrip(props: {
-    activeSlideNumber: number
-    setActiveSlideNumber: Dispatch<SetStateAction<number>>
+    activeSlideIndex: number
+    setActiveSlideIndex: Dispatch<SetStateAction<number>>
 }) {
     const { papersMetadata } = useContext(PapersMetadataContext)
     return (
         <>
-            <div className="filmstrip w-[12%] flex-col p-2 space-y-4 overflow-y-scroll rounded-md">
+            <div className="filmstrip w-[150pt] min-w-[150pt] h-full flex-col p-2 space-y-4 overflow-y-scroll rounded-md">
                 {papersMetadata.map((_, index) => (
                     <div key={index}>
-                        <Thumbnail slideNumber={index} {...props} />
+                        <Thumbnail slideIndex={index} {...props} />
                     </div>
                 ))}
             </div>
