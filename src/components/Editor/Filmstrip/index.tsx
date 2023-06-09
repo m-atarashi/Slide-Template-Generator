@@ -11,7 +11,7 @@ export default function Filmstrip(props: {
     const { papersMetadata } = useContext(PapersMetadataContext)
     return (
         <>
-            <div className="filmstrip w-[150pt] min-w-[150pt] h-full flex-col p-2 space-y-4 overflow-y-scroll rounded-md">
+            <div className="filmstrip w-[150pt] min-w-[150pt] h-full flex-col p-2 space-y-4 overflow-y-scroll rounded-md bg-slate-100" >
                 {papersMetadata.map((_, index) => (
                     <div key={index}>
                         <Thumbnail slideIndex={index} {...props} />

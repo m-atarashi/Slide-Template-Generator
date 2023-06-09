@@ -1,4 +1,5 @@
 {
+    "name": "Default",
     "header": {
         "general": {
             "w": "100%",
@@ -15,14 +16,16 @@
         "title": {
             "breakLine": true,
             "fontSize": 20,
-            "bold": false
+            "bold": false,
+            "hyperlink": {
+                "url": "over"
+            }
         },
         "author": {
             "fontSize": 10
         },
         "affiliation": {
             "fontSize": 10
-        },
-        "titleLink": "over"
+        }
     }
 }

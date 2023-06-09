@@ -1,4 +1,5 @@
 {
+    "name": "Demo",
     "header": {
         "general": {
             "w": "100%",
@@ -13,16 +14,15 @@
             "color": "000000"
         },
         "title": {
-            "breakLine": true,
             "fontSize": 20,
-            "bold": false
+            "bold": false,
+            "hyperlink": { "url": "underline" }
         },
         "author": {
             "fontSize": 10
         },
         "affiliation": {
             "fontSize": 10
-        },
-        "titleLink": "underline"
+        }
     }
 }

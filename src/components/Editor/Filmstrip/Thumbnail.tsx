@@ -1,14 +1,21 @@
-import { Dispatch, SetStateAction, useCallback } from 'react'
-
-import Slide from '../Slide'
+import { PapersMetadataContext } from '@components/Context/PapersMetadata'
+import { ThemeContext } from '@components/Context/Theme'
+import Slide from '@components/Slide'
+import { Dispatch, SetStateAction, useCallback, useContext } from 'react'
 
 // スライド・サムネイル
-export default function Thumbnail(props: {
+export default function Thumbnail({
+    slideIndex,
+    activeSlideIndex,
+    setActiveSlideIndex,
+}: {
     slideIndex: number
     activeSlideIndex: number
     setActiveSlideIndex: Dispatch<SetStateAction<number>>
 }) {
-    const { slideIndex, activeSlideIndex, setActiveSlideIndex } = props
+    const { papersMetadata } = useContext(PapersMetadataContext)
+    const paperMetadata = papersMetadata[slideIndex]
+    const { theme } = useContext(ThemeContext)
 
     // クリックしたスライドをアクティブにする
     const clickHandler = useCallback(
@@ -25,7 +32,7 @@ export default function Thumbnail(props: {
             type="button"
             onClick={() => clickHandler(slideIndex)}
         >
-            <Slide slideIndex={slideIndex} />
+            <Slide paperMetadata={paperMetadata} themeName={theme.name} />
         </button>
     )
 }

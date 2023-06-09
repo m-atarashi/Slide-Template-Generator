@@ -46,7 +46,7 @@ export const save = async (papersMetadata: PaperMetadata[], Theme: Theme) => {
         let slide = pptx.addSlide()
 
         const titleProps = { text: title, options: header.title }
-        if (header.titleLink === 'underline') {
+        if (header.title.hyperlink?.url === 'underline') {
             titleProps.options.hyperlink = { url: doi }
         }
         const authorProps = getAuthorsTextProps(authors, affiliations).map((e) => ({
@@ -58,15 +58,15 @@ export const save = async (papersMetadata: PaperMetadata[], Theme: Theme) => {
             options: { ...header.affiliation, ...e.options },
         }))
 
-        slide.addText([titleProps, ...authorProps, { text: '\n' }, ...affiliationProps], {
-            ...header.general,
-        })
+        slide.addText(
+            [titleProps, { text: '\n' }, ...authorProps, { text: '\n' }, ...affiliationProps],
+            header.general
+        )
         // タイトルにリンクを張る（下線なし）
-        if (header.titleLink === 'over') {
+        if (header.title.hyperlink?.url === 'over') {
             addHyperlinkRect(slide, header.general, doi)
         }
     })
-
     await pptx.writeFile()
 }
 

@@ -13,11 +13,8 @@ import fs from 'fs'
 import { useState } from 'react'
 
 export default function Index(props: { themes: { [key: string]: Theme } }) {
-    // The index of the focused slide
-    const [activeSlideIndex, setActiveSlideIndex] = useState(0)
-
-    // The name of the active theme
-    const [activeTheme, setActiveTheme] = useState('Default')
+    const [activeSlideIndex, setActiveSlideIndex] = useState(0) // 現在のページ番号
+    const [activeTheme, setActiveTheme] = useState('Default') // 現在のスライドのテーマ
 
     return (
         <PapersMetadataContextProvider>
@@ -33,7 +30,7 @@ export default function Index(props: { themes: { [key: string]: Theme } }) {
                         activeSlideIndex={activeSlideIndex}
                         setActiveSlideIndex={setActiveSlideIndex}
                     />
-                    <Preview slideIndex={activeSlideIndex} activeTheme={activeTheme} />
+                    <Preview slideIndex={activeSlideIndex} />
                     <Inspector />
                 </Editor>
                 {/* <Debug /> デバッグ用 */}

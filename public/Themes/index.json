@@ -1,14 +1,14 @@
 {
     "themes": {
-        "Demo": {
-            "name": "Demo",
-            "description": "A theme for demonstration",
-            "path": "demo.json"
-        },
         "Default": {
             "name": "Default",
             "description": "Default theme",
             "path": "default.json"
+        },
+        "Demo": {
+            "name": "Demo",
+            "description": "A theme for demonstration",
+            "path": "demo.json"
         }
     }
 }

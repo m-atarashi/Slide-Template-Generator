@@ -1,4 +1,6 @@
+import { dummy } from '@components/Context/PapersMetadata'
 import { ThemeContext } from '@components/Context/Theme'
+import Slide from '@components/Slide'
 import { Theme } from '@lib/types'
 import config from '@Themes/index.json'
 import { Dispatch, SetStateAction, useCallback, useContext } from 'react'
@@ -10,7 +12,7 @@ export default function ThemeCarousel(props: {
 }) {
     return (
         <>
-            <div className="themes flex h-[100pt] p-2 space-x-4 overflow-x-auto rounded-md bg-orange-200">
+            <div className="themes flex w-full h-[100pt] min-h-[100pt] p-2 space-x-4 overflow-x-auto rounded-md  bg-slate-100">
                 {Object.keys(config.themes).map((name) => (
                     <div key={name}>
                         <ThemeThumbnail name={name} {...props} />
@@ -44,11 +46,11 @@ export function ThemeThumbnail(props: {
 
     return (
         <button
-            className={`theme-thumbnail w-[20pt] aspect-w-16 aspect-h-9 p-1 border-2 rounded-lg overflow-hidden ${activeClass}`}
+            className={`theme-thumbnail w-[150pt] p-1 border-2 rounded-lg overflow-hidden ${activeClass}`}
             type="button"
             onClick={() => onClick(name)}
         >
-            {name}
+            <Slide paperMetadata={dummy[0]} themeName={name} />
         </button>
     )
 }
