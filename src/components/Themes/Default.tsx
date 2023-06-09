@@ -6,10 +6,15 @@ import theme from '@Themes/default.json'
 export default function Default({
     paperMetadata,
     scale,
+    extendedTheme,
 }: {
     paperMetadata: PaperMetadata
     scale: number
+    extendedTheme?: any
 }) {
+    if (extendedTheme) {
+        const theme = { ...theme, ...extendedTheme }
+    }
     return (
         <>
             <div className="header" style={propsToStyle(theme.header.general, scale)}>

@@ -10,8 +10,9 @@ export interface PaperMetadata {
 
 export interface Theme {
     name: string,
+    extends: string,
     header: {
-        general: any
+        general?: any
         title: PptxGenJS.TextPropsOptions
         author: PptxGenJS.TextPropsOptions
         affiliation: PptxGenJS.TextPropsOptions

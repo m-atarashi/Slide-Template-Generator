@@ -1,6 +1,6 @@
 import { PapersMetadataContext } from '@components/Context/PapersMetadata'
 import { ThemeContext } from '@components/Context/Theme'
-import save from '@lib/presentation'
+import exporters from '@lib/Presentation'
 import { useCallback, useContext } from 'react'
 
 export default function SaveBtn() {
@@ -8,7 +8,8 @@ export default function SaveBtn() {
     const { theme } = useContext(ThemeContext)
 
     const onClick = useCallback(async () => {
-        await save(papersMetadata, theme)
+        const exporter = exporters[theme.name] ?? exporters['Default']
+        await exporter(papersMetadata, theme)
     }, [papersMetadata, theme])
 
     return (

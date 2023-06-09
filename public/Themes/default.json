@@ -1,5 +1,6 @@
 {
     "name": "Default",
+    "extends": "",
     "header": {
         "general": {
             "w": "100%",
@@ -10,7 +11,9 @@
             "align": "center",
             "valign": "middle",
             "fit": "shrink",
-            "fill": { "color": "ffffff" },
+            "fill": {
+                "color": "ffffff"
+            },
             "color": "000000"
         },
         "title": {

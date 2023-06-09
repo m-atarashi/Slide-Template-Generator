@@ -54,5 +54,9 @@ const loadThemes = () => {
         themes[name] = JSON.parse(data)
     })
 
+    // 継承
+    Object.entries(themes).forEach(([name, theme]) => {
+        themes[name] = { ...themes[theme.extends], ...theme }
+    })
     return themes
 }

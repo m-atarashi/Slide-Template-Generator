@@ -1,28 +1,16 @@
 {
     "name": "Demo",
+    "extends": "Default",
     "header": {
         "general": {
-            "w": "100%",
-            "h": "20%",
-            "x": 0,
-            "y": 0,
-            "margin": 1,
-            "align": "center",
-            "valign": "middle",
-            "fit": "shrink",
-            "fill": { "color": "eeeeee" },
-            "color": "000000"
+            "fill": {
+                "color": "eeeeee"
+            }
         },
         "title": {
-            "fontSize": 20,
-            "bold": false,
-            "hyperlink": { "url": "underline" }
-        },
-        "author": {
-            "fontSize": 10
-        },
-        "affiliation": {
-            "fontSize": 10
+            "hyperlink": {
+                "url": "underline"
+            }
         }
     }
 }
